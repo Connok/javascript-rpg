@@ -76,7 +76,7 @@ const locations = [
     },
     {
         name: "fight",
-        "button text": ["attack", "dodge", "run"],
+        "button text": ["Attack", "Dodge", "Run"],
         "button functions": [attack, dodge, goTown],
         text: "You are fighting a monster."
 
@@ -84,7 +84,7 @@ const locations = [
     {
         name: "killMonster",
         "button text": ["Go To Town Square", "Go To Town Square", "Go To Town Square"],
-        "button functions": [goTown, goTown, goTown],
+        "button functions": [goTown, goTown, easterEgg],
         text: `The monster Screems "Arg!" as it dies. You gain experiance points and find gold.`
     },
     {
@@ -157,6 +157,7 @@ function buyWeapon() {
     if (currentWeapon < weapons.length - 1) {
         if(gold >=30){
             gold -= 30;
+            goldText.innerText = gold;
             currentWeapon++;
             let newWeapon = weapons[currentWeapon].name;
             text.innerText = "You now have a new weapon. You now have a " + newWeapon + ".";
@@ -266,16 +267,33 @@ function easterEgg(){
     update(locations[7]);
 };
 function pickTwo(){
-    pickTwo(2)
+    pick(2)
 };
 function pickEight(){
-    pickTwo(8)
+    pick(8)
 };
 function pick(guess){
     let numbers = [];
     while (numbers.length < 10){
         numbers.push(Math.floor(Math.random() * 11 ));
     }
-    text.innerText = '';
+    text.innerText = 'You picked ' + guess + ". Here are the random numbers:\n";
+
+    for (let i = 0; i < 10; i++) {
+        text.innerText += numbers[i] + '\n';
+    }
+
+    if (numbers.lastIndexOf(guess) !== -1) {
+        text.innerText += 'Right you win 20 gold!';
+        gold += 20;
+        goldText.innerText = gold;
+    } else {
+        text.innerText += 'Wrong you lose 10 health!';
+        health -= 10;
+        healthText.innerText = health;
+        if(health <= 0){
+            lose();
+        }
+    }
  
 };
