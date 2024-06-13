@@ -198,7 +198,13 @@ function goFight() {
 function attack(){
     text.innerText = "The " + monsters[fighting].name + " attacks";
     text.innerText = "You attackit with your  " + weapons[currentWeapon].name + ".";
-    health -= monsters[fighting].level;
+
+    if (isMonsterHit()){
+        health -= getMonsterAttackValue(monsters[fighting].level);
+    }else {
+        text.innerText += "You Missed"
+    }
+    
     monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
     healthText.innerText = health;
     monsterHealthText.innerText = monsterHealth;
@@ -210,7 +216,17 @@ function attack(){
         fighting === 2 ? winGame() : defeteMonster();
     }
 
-
+    if (Math.random() <= .1 && inventory.length !== 1){
+        text.innerText += "Your " + inventory.pop() + "breaks.";
+        currentWeapon--;
+    };
+};
+function getMonsterAttackValue(level){
+    let hit = (level * 5) - (Math.floor(Math.random() * xp));
+    return hit;
+};
+function isMonsterHit(){
+    return Math.random() > .2 || health < 20;
 };
 function doge(){
     text.innerText = "You Doged the attack from " + monsters[fighting].name + ".";
