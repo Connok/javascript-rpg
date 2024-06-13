@@ -76,8 +76,8 @@ const locations = [
     },
     {
         name: "fight",
-        "button text": ["attack", "doge", "run"],
-        "button functions": [attack, doge, goTown],
+        "button text": ["attack", "dodge", "run"],
+        "button functions": [attack, dodge, goTown],
         text: "You are fighting a monster."
 
     },
@@ -98,6 +98,12 @@ const locations = [
         "button text": ["Replay?", "Replay?", "Replay?"],
         "button functions": [restart, restart, restart],
         text: `You Defeat the Dragon! YOU WIN THE GAME!`
+    },
+    {
+        name: 'easter egg',
+        "button text": ["2", "8", "Go to Town"],
+        "button functions": [pickTwo, pickEight, goTown],
+        text: `You find a secret game. Pick a number above. Ten numbers will be randomly chosen between 0 and 10. If the number you choese matches on of the random numbers, you win!`
     }
 
 
@@ -228,7 +234,7 @@ function getMonsterAttackValue(level){
 function isMonsterHit(){
     return Math.random() > .2 || health < 20;
 };
-function doge(){
+function dodge(){
     text.innerText = "You Doged the attack from " + monsters[fighting].name + ".";
 };
 function defeteMonster(){
@@ -255,4 +261,21 @@ function restart(){
     healthText.innerText = health;
     xpText.innerText = xp;
     goTown();
+};
+function easterEgg(){
+    update(locations[7]);
+};
+function pickTwo(){
+    pickTwo(2)
+};
+function pickEight(){
+    pickTwo(8)
+};
+function pick(guess){
+    let numbers = [];
+    while (numbers.length < 10){
+        numbers.push(Math.floor(Math.random() * 11 ));
+    }
+    text.innerText = '';
+ 
 };
